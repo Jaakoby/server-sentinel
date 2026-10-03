@@ -1,0 +1,35 @@
+SERVER SENTINEL — SINGLE-USER LICENCE
+Copyright (c) 2026 Jakoby Tuckta. All rights reserved.
+
+WHAT YOU MAY DO
+You are granted a non-exclusive, non-transferable licence to use this software
+on any number of Minecraft servers that you personally own or administer, and to
+modify your own copy for your own use.
+
+WHAT YOU MAY NOT DO
+You may not redistribute, resell, sublicence, publish or share this software or
+any derivative of it, in whole or in part, whether modified or unmodified, free
+or for payment. You may not include it in a modpack, hosting panel, server
+template or other product distributed to third parties without a separate
+written licence.
+
+NO WARRANTY
+This software is provided "as is", without warranty of any kind, express or
+implied, including but not limited to the warranties of merchantability, fitness
+for a particular purpose and non-infringement.
+
+THIS IS A DIAGNOSTIC AID, NOT AN AUTHORITY. It reports patterns it recognises in
+log files. It can be wrong, it can miss the real cause, and it can name the wrong
+mod. You remain responsible for verifying any diagnosis and for backing up your
+world before acting on any suggestion in its output. In particular, suggestions
+that involve deleting configs, dropping registry entries or removing mods can
+cause permanent data loss in your world if applied without a backup.
+
+In no event shall the author be liable for any claim, damages or other liability,
+whether in an action of contract, tort or otherwise, arising from, out of or in
+connection with this software or its use, including but not limited to loss of
+world data, server downtime or corrupted saves.
+
+LIMIT OF REMEDY
+If the software does not work for you, your sole remedy is a refund of what you
+paid for it.
