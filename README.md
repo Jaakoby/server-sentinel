@@ -48,6 +48,14 @@ tight and it never notices a loop. Verified: the same bug at a different line
 signs identically, while a different exception or the same exception in a
 different mod signs differently.
 
+**When it cannot build one, it says so.** A crash with no readable cause *and*
+no identifiable jar gets no signature, and the report says
+`sig: none - this crash cannot be fingerprinted`. Repeats of that crash will not
+be detected, and you are told that rather than left to assume otherwise — the
+alternative is announcing two unrelated crashes as the same one, which is the
+failure that would actually cost you something: it stops you restarting a server
+that would have come straight back up.
+
 ## What it also reports
 
 - Server up, with boot time, and server stopping
@@ -94,5 +102,5 @@ It reads logs. A native JVM crash leaves no Java trace to parse — look for an
 `hs_err_pid` file instead. If your server dies with no crash report at all, the
 process was killed from outside, usually the OS out-of-memory killer.
 
-Free to use and to share. Not affiliated with Mojang, Microsoft, MinecraftForge
-or NeoForged.
+Free to use on any server you own or administer — see `LICENSE.txt`. Not
+affiliated with Mojang, Microsoft, MinecraftForge or NeoForged.

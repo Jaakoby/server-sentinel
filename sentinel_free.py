@@ -110,7 +110,12 @@ _VANILLA = re.compile(
     r"brigadier-|guava-|mixin-|log4j|slf4j|gson-|commons-|asm-)",
     re.I,
 )
-FRAME_RE = re.compile(r"^\s+at ([\w$.]+)\([^)]*\)\s*~?\[([^\]]+)\]")
+# `<` and `>` must be in the symbol class: constructors appear as
+# `TechMod.<init>` and static initialisers as `<clinit>`, and a mod dying in
+# its own constructor is one of the most common crashes there is. Without
+# them this matched nothing and named no culprit -- the identical defect was
+# found and fixed in forge_doctor.py; this is the second reader of the shape.
+FRAME_RE = re.compile(r"^\s+at ([\w$.<>]+)\([^)]*\)\s*~?\[([^\]]+)\]")
 
 
 def now() -> str:
@@ -147,7 +152,7 @@ def classify(line: str) -> Optional[Event]:
 # Crash signatures — the whole point
 # ---------------------------------------------------------------------------
 
-def crash_signature(recent: List[str]) -> Tuple[str, str, Optional[str]]:
+def crash_signature(recent: List[str]) -> Tuple[Optional[str], str, Optional[str]]:
     """Reduce a crash to a stable fingerprint.
 
     Returns (signature, cause line, culprit jar). Two crashes with the same
@@ -177,6 +182,16 @@ def crash_signature(recent: List[str]) -> Tuple[str, str, Optional[str]]:
     # Strip numbers out of the cause so line numbers and coordinates do not
     # make two instances of the same crash look different.
     stable = re.sub(r"\d+", "N", cause)
+
+    # With NO cause and NO culprit there is nothing to fingerprint. Hashing the
+    # empty pair gave every such crash the same signature -- sha256("|"), which
+    # is cbe5cfdf7c21 -- so two completely unrelated crashes were announced as
+    # "THIS IS THE SAME CRASH, restarting will reproduce it". Confidently wrong,
+    # and wrong in the direction that stops someone restarting a server that
+    # would have come straight back up. Say we do not know instead.
+    if not stable and not culprit:
+        return None, cause, culprit
+
     sig = hashlib.sha256(f"{stable}|{culprit or ''}".encode()).hexdigest()[:12]
     return sig, cause, culprit
 
@@ -300,6 +315,13 @@ def cmd_watch(args) -> int:
         if pending is None:
             return
         sig, cause, culprit = crash_signature(pending)
+        if sig is None:
+            # Unfingerprintable: report the crash, claim nothing about repeats.
+            al.say(3, "CRASH", "cause:   not identified in the captured lines\n"
+                               "sig:     none - this crash cannot be fingerprinted,\n"
+                               "         so repeats of it will not be detected")
+            pending = None
+            return
         seen_sigs[sig] = seen_sigs.get(sig, 0) + 1
         n = seen_sigs[sig]
         body = f"cause:   {cause or 'unknown'}\n"
