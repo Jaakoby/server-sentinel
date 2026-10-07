@@ -9,6 +9,13 @@ python sentinel_free.py watch logs/latest.log
 Read-only. It changes nothing, starts nothing and stops nothing — it follows the
 log and tells you what is happening. One file, no dependencies, Python 3.8+.
 
+Or install it from PyPI and skip the download:
+
+```bash
+pip install server-sentinel
+server-sentinel watch logs/latest.log
+```
+
 ## Why this exists
 
 Every hosting panel restarts a dead server. None of them notice it is dying the
