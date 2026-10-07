@@ -109,5 +109,13 @@ It reads logs. A native JVM crash leaves no Java trace to parse — look for an
 `hs_err_pid` file instead. If your server dies with no crash report at all, the
 process was killed from outside, usually the OS out-of-memory killer.
 
+## Related reading
+
+- [Minecraft server keeps crashing and restarting in a loop](https://jaakoby.github.io/guides/minecraft-server-keeps-restarting.html)
+  — why a panel's auto-restart hides the problem instead of fixing it
+- [Server won't start and there is no crash report](https://jaakoby.github.io/guides/minecraft-server-wont-start-no-crash-report.html)
+  — the case the limits above describe
+- [How much RAM a modded server actually needs](https://jaakoby.github.io/guides/how-much-ram-modded-minecraft-server.html)
+
 Free to use on any server you own or administer — see `LICENSE.txt`. Not
 affiliated with Mojang, Microsoft, MinecraftForge or NeoForged.
